@@ -6,17 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     public float speed = 10;
-    public GameObject BulletPrefab;
-    
     private void Start()
     {
         GameMNG.InputManager.MouseAction -= OnMouseInput;
         GameMNG.InputManager.MouseAction += OnMouseInput;
     }
-    private void Update()
-    {
-        Instantiate(BulletPrefab);
-    }
+
     void OnMouseInput()
     {
         Vector3 mousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -34,4 +29,5 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.position = playerPos;
 
     }
+
 }

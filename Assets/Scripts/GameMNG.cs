@@ -28,7 +28,7 @@ public class GameMNG : MonoBehaviour
             return instance;
         }
     }
-
+    private LevelManager g_LvlMng;
     InputManager _input = new InputManager();
     public static InputManager InputManager
     {
@@ -41,4 +41,11 @@ public class GameMNG : MonoBehaviour
         if(g_GameState == GameState.InProgress)
             _input.OnUpdate();
     }
+    public LevelManager getLvlMNG()
+    {
+        if (g_LvlMng == null)
+            g_LvlMng = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        return g_LvlMng;
+    }
+
 }

@@ -27,16 +27,18 @@ public class Frefab : MonoBehaviour
 
         // 메쉬 텍스트 프로 추가
         healthText = healthObject.AddComponent<TextMesh>();
-        UpdateHealthText(); // 초기 체력 설정
+
         EnemyAnimator = Enemy.GetComponent<Animator>();
         //Timer = null;
         //this.PlayTime();
         levelManager = FindObjectOfType<LevelManager>();
         int fTime = levelManager.Time;
 
-        Enemy_Hp += 1+ fTime * Random.Range(0, 5);
-        
-        
+        //Enemy_Hp += 1+ fTime * Random.Range(0, 5);
+        Enemy_Hp = 5;
+        UpdateHealthText(); // 초기 체력 설정
+
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -44,50 +46,28 @@ public class Frefab : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (other.CompareTag("Attack"))
+        else if (other.CompareTag("Bullet"))
         {
+            Destroy(other.gameObject);
             Enemy_Hp -= 5; // HP를 5 감소시킴
             UpdateHealthText(); // 텍스트 업데이트
             if (Enemy_Hp <= 0)
             {
                 Destroy(gameObject,1.5f); // HP가 0 이하면 게임 오브젝트를 삭제
+                GameMNG.Instance.getLvlMNG().KillCheck();
                 Walk_bool=false;//죽는 모션
                 EnemyAnimator.SetTrigger("Dead");
             }
         }
     }
-    /*void Enemy_Kill()
-    {
-        
-    }
-
-    void PlayTime()
-    {
-        if(Timer != null) StopCoroutine(Timer);
-        Timer = StartCoroutine(Timerr());
-    }
-    IEnumerator Timerr()
-    {
-        yield return null;
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f);
-            Play_Time = Play_Time + 0.1f;
-        }
-    }
-    */
    
 
     void Update()
     {
-        
         if (Walk_bool==true)
         {
             Walk();
         }
-        // PlayTime();
-       
-        
     }
 
     void Walk() // 몬스터 이동
@@ -98,9 +78,9 @@ public class Frefab : MonoBehaviour
     // 체력 텍스트 업데이트 함수
     void UpdateHealthText()
     {
-            healthText.text = Enemy_Hp.ToString(); // 체력 업데이트
-            healthText.characterSize = 1.0f; // 텍스트 크기 설정
-            healthText.anchor = TextAnchor.UpperCenter; // 텍스트 위치 설정
-            healthText.color = Color.red; // 텍스트 색상 설정     
+        healthText.text = Enemy_Hp.ToString(); // 체력 업데이트
+        healthText.characterSize = 1.0f; // 텍스트 크기 설정
+        healthText.anchor = TextAnchor.UpperCenter; // 텍스트 위치 설정
+        healthText.color = Color.red; // 텍스트 색상 설정     
     }
 }
