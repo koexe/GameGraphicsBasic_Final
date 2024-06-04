@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     public float speed = 10;
+    public BulletSpawn spawn;
+    public Transform range;
+
     private void Start()
     {
         GameMNG.InputManager.MouseAction -= OnMouseInput;

@@ -16,10 +16,16 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         co_Timer = null;
         this.TimeCheck();
         InvokeRepeating("InvokePrefab", 1f, 3f);
         this.li_Prefab = new List<GameObject>();
+
+        GameObject gmobjTemp = Instantiate(this.prefabObj, new Vector3(0.0f, 2f, 30f), Quaternion.identity);
+        gmobjTemp.GetComponent<Frefab>().BossInit();
+        this.li_Prefab.Add(gmobjTemp);
     }
 
     // Update is called once per frame
@@ -39,6 +45,7 @@ public class LevelManager : MonoBehaviour
         GameObject gmobjTree02;
 
         gmobjTemp = Instantiate(this.prefabObj, new Vector3(Random.Range(-4, 4), 2f, 30f), Quaternion.identity);
+        gmobjTemp.GetComponent<Frefab>().Init();
         gmobjTree01 = Instantiate(this.prefabTree, new Vector3(-5f, 0f, 50f), Quaternion.identity);
         gmobjTree02 = Instantiate(this.prefabTree, new Vector3(5f, 0, 50), Quaternion.identity);
         this.li_Prefab.Add(gmobjTemp);
@@ -67,7 +74,14 @@ public class LevelManager : MonoBehaviour
     public void KillCheck()
     {
         killCount += 1;
-        KillText.text = "Kill: " + killCount;
+        KillText.text = "Kill :" + killCount;
+        if(killCount % 10 == 0)
+        {
+            GameObject gmobjTemp = Instantiate(this.prefabObj, new Vector3(0.0f, 2f, 30f), Quaternion.identity);
+            gmobjTemp.GetComponent<Frefab>().BossInit();
+            this.li_Prefab.Add(gmobjTemp);
+            Debug.Log("kill10");
+        }
     }
 
 }
