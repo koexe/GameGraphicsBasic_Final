@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - Bullet
   - Tree
+  - Button
   layers:
   - Default
   - TransparentFX

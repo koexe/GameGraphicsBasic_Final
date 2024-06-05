@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public BulletSpawn spawn;
     public Transform range;
 
+
     private void Start()
     {
         GameMNG.InputManager.MouseAction -= OnMouseInput;

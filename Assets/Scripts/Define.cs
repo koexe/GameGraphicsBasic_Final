@@ -9,4 +9,12 @@ public class Define
         QuaterView,
         TopView
     }
+    public enum Stats
+    {
+        AttackSpeed,
+        AttackDamage,
+        AttackAmount,
+        AttackRate,
+        AttackRange
+    }
 }

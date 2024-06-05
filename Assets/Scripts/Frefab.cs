@@ -15,20 +15,30 @@ public class Frefab : MonoBehaviour
     private bool Walk_bool = true;
     public GameObject Enemy;
     public Animator EnemyAnimator; //게임오브젝트의 애니메이터 컴포너트를 자겨오고
+    public bool isBoss = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))
         {
-            Destroy(other.gameObject);
-            Enemy_Hp -= 5; // HP를 5 감소시킴
-            UpdateHealthText(); // 텍스트 업데이트
-            if (Enemy_Hp <= 0)
+            if(Walk_bool == true)
             {
+                Destroy(other.gameObject);
+                Enemy_Hp -= other.gameObject.GetComponent<Bullet>().Damage;
+                UpdateHealthText(); // 텍스트 업데이트
+            }
+            if (Enemy_Hp <= 0 && Walk_bool)
+            {
+                Destroy(gameObject.GetComponent<Rigidbody>());
+                Destroy(gameObject.GetComponent<BoxCollider>());//중복 충돌 방지
                 Destroy(gameObject,1.5f); // HP가 0 이하면 게임 오브젝트를 삭제
                 GameMNG.Instance.getLvlMNG().KillCheck();
                 Walk_bool=false;//죽는 모션
                 EnemyAnimator.SetTrigger("Dead");
+                if(isBoss)
+                {
+                    GameMNG.Instance.ShowSelectButton();
+                }
             }
         }
     }
@@ -71,6 +81,7 @@ public class Frefab : MonoBehaviour
         //Enemy_Hp += 1+ fTime * Random.Range(0, 5);
         Enemy_Hp = 5;
         UpdateHealthText(); // 초기 체력 설정
+        isBoss = false;
     }
     public void BossInit()
     {
@@ -87,5 +98,6 @@ public class Frefab : MonoBehaviour
         //Enemy_Hp += 1+ fTime * Random.Range(0, 5);
         Enemy_Hp = (int)(10 + GameMNG.Instance.g_fGameTime * Random.Range(0, 5));
         UpdateHealthText(); // 초기 체력 설정
+        isBoss = true;
     }
 }
