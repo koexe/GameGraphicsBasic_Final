@@ -18,14 +18,11 @@ public class ScoreMNG : MonoBehaviour
                     go.AddComponent<ScoreMNG>();
                 }
                 instance = go.GetComponent<ScoreMNG>();
+                DontDestroyOnLoad(go);
                 return instance;
             }
             return instance;
         }
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
 }

@@ -14,18 +14,18 @@ public class SelectStatButton : MonoBehaviour
         switch (m_Stats)
         {
             case Define.Stats.AttackDamage:
-                int stateAmount_1 = Random.Range(0, 10);
+                int stateAmount_1 = Random.Range(1, 6);
                 m_ExplainText.text = "공격력" + stateAmount_1;
                 m_Button.onClick.AddListener(() => Damage(stateAmount_1));
                 
                 break;
             case Define.Stats.AttackSpeed:
-                float stateAmount_2 = Mathf.Floor(Random.Range(0, 20.0f) * 10)/10;
+                float stateAmount_2 = Mathf.Floor(Random.Range(5, 20.0f) * 10)/10;
                 m_ExplainText.text = "발사체 속도" + stateAmount_2;
                 m_Button.onClick.AddListener(() => AttackSpeed(stateAmount_2));
                 break;
             case Define.Stats.AttackRange:
-                int stateAmount_3 = Random.Range(0, 3);
+                int stateAmount_3 = Random.Range(1, 5);
                 m_ExplainText.text = "공격 사거리" + stateAmount_3;
                 m_Button.onClick.AddListener(() => Range(stateAmount_3));
                 break;
@@ -34,7 +34,7 @@ public class SelectStatButton : MonoBehaviour
                 m_Button.onClick.AddListener(() => AttackAmount());
                 break;
             case Define.Stats.AttackRate:
-                float stateAmount_5 = Mathf.Floor(Random.Range(0, 20.0f) * 10) / 10;
+                float stateAmount_5 = Mathf.Floor(Random.Range(10.0f, 25.0f) * 10) / 10;
                 m_ExplainText.text = "공격속도" + stateAmount_5;
                 m_Button.onClick.AddListener(() => AttackRate(stateAmount_5));
                 break;
@@ -66,8 +66,9 @@ public class SelectStatButton : MonoBehaviour
     }
     void Range(int amount)
     {
-        Debug.Log("Rane");
+        Debug.Log("Range");
         GameMNG.Instance.getPlayerCTR().spawn.m_AttackRange += amount;
+        GameMNG.Instance.getPlayerCTR().spawn.RangeGO.transform.position += new Vector3(0, 0, GameMNG.Instance.getPlayerCTR().spawn.m_AttackRange);
         GameObject[] findobjs = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < findobjs.Length; i++)
         {
@@ -89,7 +90,7 @@ public class SelectStatButton : MonoBehaviour
     void AttackRate(float amount)
     {
         Debug.Log("DamageButton");
-        GameMNG.Instance.getPlayerCTR().spawn.m_fAttackRate -= GameMNG.Instance.getPlayerCTR().spawn.m_fAttackRate/(20 - amount);
+        GameMNG.Instance.getPlayerCTR().spawn.m_fAttackRate -= GameMNG.Instance.getPlayerCTR().spawn.m_fAttackRate/(40 - amount);
         GameObject[] findobjs = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < findobjs.Length; i++)
         {

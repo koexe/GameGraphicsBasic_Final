@@ -38,8 +38,14 @@ public class Frefab : MonoBehaviour
                 if(isBoss)
                 {
                     GameMNG.Instance.ShowSelectButton();
+                    GameMNG.Instance.g_iRound +=1;
                 }
             }
+        }
+        if(other.CompareTag("Player"))
+        {
+            GameMNG.Instance.PlayerHitAction.Invoke();
+            Destroy(gameObject);
         }
     }
    
@@ -79,7 +85,7 @@ public class Frefab : MonoBehaviour
         //this.PlayTime();
 
         //Enemy_Hp += 1+ fTime * Random.Range(0, 5);
-        Enemy_Hp = 5;
+        Enemy_Hp = 5 + GameMNG.Instance.g_iRound *5;
         UpdateHealthText(); // 초기 체력 설정
         isBoss = false;
     }
@@ -95,9 +101,11 @@ public class Frefab : MonoBehaviour
         //Timer = null;
         //this.PlayTime();
         Enemy.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        gameObject.transform.GetComponent<BoxCollider>().size = new Vector3(3.0f, 3.0f, 3.0f);
         //Enemy_Hp += 1+ fTime * Random.Range(0, 5);
-        Enemy_Hp = (int)(10 + GameMNG.Instance.g_fGameTime * Random.Range(0, 5));
+        Enemy_Hp = (int)(GameMNG.Instance.g_iRound *5 + GameMNG.Instance.g_fGameTime / 2);
         UpdateHealthText(); // 초기 체력 설정
         isBoss = true;
+
     }
 }

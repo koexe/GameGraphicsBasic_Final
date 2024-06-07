@@ -5,12 +5,14 @@ using UnityEngine;
 public class BulletSpawn : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] public GameObject RangeGO;
     private Coroutine m_crGenerateBullet;
     public float m_BulletSpeed = 300;
-    public float m_AttackRange = 10f;
+    public float m_AttackRange = 0f;
     public float m_fAttackRate = 0.5f;
     public int m_iAttackDamage = 5;
     public int m_iAttackAmount = 1;
+
 
 
     // Start is called before the first frame update
@@ -55,5 +57,14 @@ public class BulletSpawn : MonoBehaviour
     void InvokePrefab()
     {
         BulletGenerate();
+    }
+
+    public void ResetInit()
+    {
+        m_BulletSpeed = 300;
+        m_AttackRange = 0f;
+        m_fAttackRate = 0.5f;
+        m_iAttackDamage = 5;
+        m_iAttackAmount = 1;
     }
 }
