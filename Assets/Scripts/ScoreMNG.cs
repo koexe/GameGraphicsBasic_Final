@@ -4,19 +4,22 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Linq;
 
 public class ScoreMNG : MonoBehaviour
 {
     [Serializable]
     public class ScoreInfo
     {
-        string m_sName;
-        int m_iMissedUnit;
-        float m_fTime;
-        public ScoreInfo(string name, int missed, float time)
+        public string m_sName;
+        public int m_iMissedUnit;
+        public float m_fTime;
+        public int m_iRound;
+        public ScoreInfo(string name, int missed,int round, float time)
         {
             m_sName = name;
             m_iMissedUnit = missed;
+            m_iRound = round;
             m_fTime = time;
         }
     }
@@ -57,6 +60,8 @@ public class ScoreMNG : MonoBehaviour
         {
             string JsonDataTemp = File.ReadAllText(path);
             ScoreList = JsonConvert.DeserializeObject<List<ScoreInfo>>(JsonDataTemp);
+            List<ScoreInfo> temp = ScoreList.OrderByDescending(x => x.m_iRound).ToList<ScoreInfo>();
+            ScoreList = temp;
         }
         else
         {
@@ -75,9 +80,9 @@ public class ScoreMNG : MonoBehaviour
             Debug.Log("Save Complete " + path);
         }
     }
-    public void AddList(int missed, float time, string name = "AAA")
+    public void AddList(int missed, int round, float time,  string name = "AAA")
     {
-        ScoreInfo info_temp = new ScoreInfo(name, missed, time);
+        ScoreInfo info_temp = new ScoreInfo(name, missed,round, time);
         ScoreList.Add(info_temp);
     }
 }

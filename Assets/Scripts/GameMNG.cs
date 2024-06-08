@@ -19,7 +19,6 @@ public class GameMNG : MonoBehaviour
     public Action PlayerHitAction;
 
     public int g_iMissedUnits = 0;
-    public int g_iRound = 0;
 
     public static GameMNG Instance
     {
@@ -85,8 +84,14 @@ public class GameMNG : MonoBehaviour
 
     public void SaveGameInfo()
     {
-        ScoreMNG.Instance.AddList(g_iMissed, g_fGameTime);
+        ScoreMNG.Instance.AddList(g_iMissed,g_iRound, g_fGameTime);
         ScoreMNG.Instance.SaveList();
+    }
+
+    public void ShowGameOver()
+    {
+        GameOver.SetActive(true);
+    }
     public void ResetStage()
     {
         g_PlayerCTR.ResetInit();
@@ -97,7 +102,7 @@ public class GameMNG : MonoBehaviour
         {
             Destroy(enemys[i]);
         }
-        for (int i = 0;i < bullets.Length; i++) { Destroy(bullets[i]); }
+        for (int i = 0; i < bullets.Length; i++) { Destroy(bullets[i]); }
         g_PlayerCTR.transform.position = new Vector3(0, 0, -16);
 
         g_fGameTime = 0.0f;
@@ -105,10 +110,4 @@ public class GameMNG : MonoBehaviour
         g_iRound = 0;
         GameOver.SetActive(false);
     }
-
-    public void ShowGameOver()
-    {
-        GameOver.SetActive(true);
-    }
-
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -82,6 +83,8 @@ public class PlayerController : MonoBehaviour
         if(PlayerHP == 0)
         {
             Time.timeScale = 0.0f;
+            ScoreMNG.Instance.AddList(GameMNG.Instance.g_iMissed, GameMNG.Instance.g_iRound, GameMNG.Instance.g_fGameTime);
+            ScoreMNG.Instance.SaveList();
             GameMNG.Instance.ShowGameOver();
         }
     }
