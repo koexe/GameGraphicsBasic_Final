@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameMNG : MonoBehaviour
 {
@@ -10,9 +12,14 @@ public class GameMNG : MonoBehaviour
     public int g_iMissed = 0;
     public int g_iRound = 0;
     public GameObject ButtonPrefab;
+    public GameObject GameOver;
     private LevelManager g_LvlMng;
     private PlayerController g_PlayerCTR;
     private static GameMNG instance;
+    public Action PlayerHitAction;
+
+    public int g_iMissedUnits = 0;
+    public int g_iRound = 0;
 
     public static GameMNG Instance
     {
@@ -80,6 +87,28 @@ public class GameMNG : MonoBehaviour
     {
         ScoreMNG.Instance.AddList(g_iMissed, g_fGameTime);
         ScoreMNG.Instance.SaveList();
+    public void ResetStage()
+    {
+        g_PlayerCTR.ResetInit();
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Monster");
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            Destroy(enemys[i]);
+        }
+        for (int i = 0;i < bullets.Length; i++) { Destroy(bullets[i]); }
+        g_PlayerCTR.transform.position = new Vector3(0, 0, -16);
+
+        g_fGameTime = 0.0f;
+        Time.timeScale = 1.0f;
+        g_iRound = 0;
+        GameOver.SetActive(false);
+    }
+
+    public void ShowGameOver()
+    {
+        GameOver.SetActive(true);
     }
 
 }
