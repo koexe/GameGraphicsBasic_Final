@@ -7,6 +7,8 @@ public class GameMNG : MonoBehaviour
     public enum GameState {Pause, InProgress}
     public GameState g_GameState;
     public float g_fGameTime = 0;
+    public int g_iMissed = 0;
+    public int g_iRound = 0;
     public GameObject ButtonPrefab;
     private LevelManager g_LvlMng;
     private PlayerController g_PlayerCTR;
@@ -72,6 +74,12 @@ public class GameMNG : MonoBehaviour
             Button_Temp.GetComponent<SelectStatButton>().Init();
             Button_Temp.GetComponent<RectTransform>().localPosition = new Vector2((i - 1) * 350 , 0);
         }
+    }
+
+    public void SaveGameInfo()
+    {
+        ScoreMNG.Instance.AddList(g_iMissed, g_fGameTime);
+        ScoreMNG.Instance.SaveList();
     }
 
 }
